@@ -25,6 +25,27 @@ public with sharing class ApiManager {
         return (ApiData.getCaseDetailsResult)action.execute(ApiData.getCaseDetailsResult.class, credential.serviceURL, 'POST', getDefaultHeader(), jsonBody);
     }
 
+    //jacky lee - 30 April
+    @AuraEnabled
+    public static ApiData.getContractDetailResult getActiveContract(){
+        try {
+            ApiData.clientCredential credential = getCredential();
+            Map<string, object> mapBody = new Map<string, object>();
+            mapBody.put('apiName', 'getActiveContract');
+            mapBody.put('clientId', credential.clientId);
+            mapBody.put('clientSecretKey', credential.clientSecretKey);
+
+            string jsonBody = JSON.serialize(mapBody);
+            System.debug('== jsonBody =='  + jsonBody);
+
+            actionBase action = new actionBase();
+            return (ApiData.getContractDetailResult)action.execute(ApiData.getContractDetailResult.class, credential.serviceURL, 'POST', getDefaultHeader(), jsonBody);
+
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
     public static string getBurndownChart() {
         ApiData.clientCredential credential = getCredential();
         Map<string, object> mapBody = buildBody(credential, 'getBurnoutChart', '');

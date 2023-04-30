@@ -26,6 +26,16 @@ global with sharing virtual class ApiData {
         @AuraEnabled public List<fileModel> files {get; set;}
         @AuraEnabled public List<clientCommunication> clientCommunications {get; set;}
     }
+//jacky lee 30 April
+    global virtual class contractModel {
+        @AuraEnabled public string id {get; set;}
+        @AuraEnabled public string contractNumber {get; set;}
+        @AuraEnabled public Decimal remainingSupportHours {get; set;}
+        @AuraEnabled public Date contractEndDate {get; set;}
+        @AuraEnabled public Date contractStartDate {get; set;}
+        @AuraEnabled public Decimal contractTerm {get; set;}
+        @AuraEnabled public String status {get; set;}
+    }
 
     public class clientCommunication {
         @AuraEnabled public string id {get; set;}
@@ -110,6 +120,11 @@ global with sharing virtual class ApiData {
 
     global class getCaseDetailsResult extends CalloutResultBase {
         @AuraEnabled public caseModel data {get; set;}
+    }
+
+//jacky lee 30 April
+    global class getContractDetailResult extends CalloutResultBase {
+        @AuraEnabled public contractModel data {get; set;}
     }
 
     global class caseRequestModel {

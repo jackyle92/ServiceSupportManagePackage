@@ -33,6 +33,7 @@ public with sharing abstract class CalloutActionBase {
             result.success = false;
             result.message = ex.getMessage() + ' - ' + ex.getStackTraceString();
         }
+        System.debug('result: ' + result);
         return result;
     }
     protected abstract CalloutResultBase processError(Type resultType, CalloutResultBase result, string response);

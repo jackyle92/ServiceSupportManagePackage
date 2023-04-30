@@ -28,6 +28,11 @@ const getValueFromEvent = function(event){
     return result;
 };
 
+// Jacky lee April 30
+const datediff  = function(firstDate, secondDate) {
+    return Math.round((secondDate - firstDate) / (1000 * 60 * 60 * 24));
+}
+
 export {
-    getValueFromEvent
+    getValueFromEvent, datediff
 }

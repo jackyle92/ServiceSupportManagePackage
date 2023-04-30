@@ -21,7 +21,7 @@ export default class ContractChart extends LightningElement {
         console.log('two time');
         getChartByStatus()
         .then(result=>{
-            console.log(result);
+            console.log('result: ', result);
             this.chartData = JSON.parse(result);
             
             this._buildChart();
