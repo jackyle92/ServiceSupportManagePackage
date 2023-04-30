@@ -1,0 +1,229 @@
+<template>
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" style="z-index:9999">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                </button>
+                <h2 class="slds-text-heading_medium slds-hyphenate">CCP Case Details</h2>
+            </header>
+
+            <div class="slds-theme_default">
+                <div class="slds-modal__content full-height__modal-content slds-p-around_medium" style="position:relative;overflow:initial;">
+                    <div class="slds-spinner_container" if:true={showSpinner}>
+                        <div role="status" class="slds-spinner slds-spinner_medium">
+                            <span class="slds-assistive-text">Loading</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-p-right_small" style="display:flex;">
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="slds-p-bottom_medium">
+                                <div class="slds-grid slds-wrap slds-p-right_small">
+                                    <div class="slds-col slds-size_1-of-2 slds-p-left_small">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Case Number</span>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-form-element__static slds-truncate">{caseModel.caseNumber}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 slds-p-left_small">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Case Type</span>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-form-element__static slds-truncate">{caseModel.caseType}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-wrap slds-p-right_small">
+                                    <div class="slds-col slds-size_1-of-2 slds-p-left_small">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Priority</span>
+                                            <div class="slds-form-element__control">
+                                                <lightning-combobox 
+                                                    name="priority" 
+                                                    label="Priority" 
+                                                    variant="label-hidden"
+                                                    value={caseModel.priority} 
+                                                    placeholder="Select"
+                                                    options={priorityOptions} 
+                                                    onchange={handleOnChange}>
+                                                </lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 slds-p-left_small">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Status</span>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-form-element__static slds-truncate">{caseModel.status}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><div class="slds-grid slds-wrap slds-p-right_small">
+                                    <div class="slds-col slds-size_1-of-2 slds-p-left_small">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Estimation Hours</span>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-form-element__static slds-truncate">{estimationHours}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 slds-p-left_small">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Estimation Status</span>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-form-element__static slds-truncate">{estimationStatus}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-wrap slds-p-right_small">
+                                    <div class="slds-col slds-size_1-of-1 slds-p-left_small">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Subject</span>
+                                            <div class="slds-form-element__control">
+                                                <lightning-input 
+                                                    type="text"
+                                                    name="subject"
+                                                    label="Subject"
+                                                    variant="label-hidden"
+                                                    value={caseModel.subject}
+                                                    onchange={handleOnChange}>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-wrap slds-p-right_small">
+                                    <div class="slds-col slds-size_1-of-1 slds-p-left_small">
+                                        <div class="slds-form-element">
+                                            <span class="slds-form-element__label">Description</span>
+                                            <div class="slds-form-element__control">
+                                                <lightning-textarea big-box
+                                                    class='bigTextarea'
+                                                    name="description" 
+                                                    label="Description" 
+                                                    variant="label-hidden"
+                                                    value={caseModel.description}
+                                                    onchange={handleOnChange}>
+                                                </lightning-textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-card title="Support" icon-name="standard:live_chat">
+                                <div class="slds-scrollable_y" style="height:300px;">
+                                    <div class="slds-p-horizontal_small" style="min-height:100px;">
+                                        <ul class="slds-p-horizontal_medium" if:true={caseModel.clientCommunications}>
+                                            <template if:true={caseModel.clientCommunications} for:each={caseModel.clientCommunications} for:item="communication">
+                                                <li key={communication.id} class="slds-feed__item">
+                                                    <article class="slds-comment slds-media slds-hint-parent">
+                                                        <div class="slds-media__body">
+                                                            <header class="slds-media slds-media_center">
+                                                                <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                                                    <p class="slds-truncate" title="Jenna Davis">
+                                                                        <a href="#">{communication.userName}</a>
+                                                                    </p>
+                                                                </div>
+                                                            </header>
+                                                            <div class="slds-comment__content slds-text-longform">
+                                                                <lightning-formatted-text value={communication.question}></lightning-formatted-text>
+                                                                <template if:true={communication.answer}>
+                                                                    <lightning-formatted-text value={communication.answer}></lightning-formatted-text>
+                                                                </template>
+                                                            </div>
+                                                            <footer>
+                                                                <ul class="slds-list_horizontal slds-has-dividers_right slds-text-body_small">
+                                                                    <li class="slds-item">
+                                                                        <lightning-formatted-date-time value={communication.createdDate} time-zone={timezoneSidId}
+                                                                            year="numeric" month="numeric" day="numeric" 
+                                                                            hour="2-digit" minute="2-digit" hour12="true">
+                                                                        </lightning-formatted-date-time>
+                                                                    </li>
+                                                                </ul>
+                                                            </footer>
+                                                        </div>
+                                                    </article>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div slot="footer">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-1 slds-p-left_small">
+                                            <lightning-textarea 
+                                                name="enquiry" 
+                                                label="Enquiry" 
+                                                variant="label-hidden"
+                                                value={clientCommunication.question}
+                                                onchange={handleEnquiryOnChange}>
+                                            </lightning-textarea>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-grid_align-spread slds-wrap">
+                                        <div class="slds-col slds-text-align_left slds-p-left_small">
+                                            <template if:false={hasFiles}>
+                                                <lightning-input 
+                                                    type="file" 
+                                                    label="Attachment" 
+                                                    variant="label-hidden"
+                                                    accept={acceptedFormats}
+                                                    onchange={handleFileUploadChange} 
+                                                    multiple>
+                                                </lightning-input>
+                                            </template>
+                                            <template if:true={hasFiles}>
+                                                <div class="slds-grid slds-grid_align-spread slds-wrap">
+                                                    <template for:each={clientCommunication.files} for:item="file">
+                                                        <div key={file.title} class="slds-col slds-text-align_left slds-p-left_small">
+                                                            <span style="font-weight: 500; font-size: 16px; ">{file.title} &nbsp; ({file.size} &nbsp;KB)</span>
+                                                        </div>
+                                                    </template>
+                                                    <div class="slds-col slds-text-align_right">
+                                                        <lightning-button-icon 
+                                                            icon-name="utility:delete" 
+                                                            size="large" 
+                                                            variant="bare"
+                                                            alternative-text="Delete" 
+                                                            class="slds-m-right_medium" 
+                                                            title="Delete"
+                                                            onclick={handleFileDelete}>
+                                                        </lightning-button-icon>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                        <div class="slds-col slds-text-align_right slds-p-left_small">
+                                            <lightning-button disabled={sendEnquiryDisabled} label="Send Enquiry" title="Send Enquiry" 
+                                                              onclick={handleSendEnquiry} variant="brand" class="slds-m-right_xx-small">
+                                            </lightning-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-card>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <footer class="slds-modal__footer">
+                <lightning-button label="Close" title="Close" onclick={closeModal} class="slds-m-right_xx-small"></lightning-button>
+                <lightning-button label="Save" title="Save" onclick={handleSave} variant="brand" class="slds-m-right_xx-small"></lightning-button>
+            </footer>
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="z-index:9998"></div>
+
+    </template>
+</template>

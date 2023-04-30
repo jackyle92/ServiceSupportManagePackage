@@ -1,0 +1,92 @@
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner class="spins" size="medium"></lightning-spinner>
+    </template>
+
+    <lightning-card title="CCP Case Submission" icon-name="custom:custom14">
+        <hr></hr>
+        <div style="margin-left: 6%" if:true={error}>
+            <lightning-badge label={error} style="color: red;"></lightning-badge>
+        </div>
+        <div class="slds-p-horizontal_x-large">
+            <div class="container-fluid">
+                <div class="form-group">
+                    <lightning-input name="subject" 
+                                     label="Subject" 
+                                     type="text" 
+                                     value={caseModel.subject}
+                                     onchange={handleOnChange}>
+                    </lightning-input>
+                </div>
+                <div class="form-group slds-m-top_medium">
+                    <lightning-textarea name="description" 
+                                        label="Description" 
+                                        value={caseModel.description}
+                                        onchange={handleOnChange}>
+                    </lightning-textarea>
+                </div>
+                <div class="form-group slds-m-top_medium">
+                    <lightning-combobox name="caseType" 
+                                        label="What type of case is it?" 
+                                        value={caseModel.caseType}
+                                        placeholder="Select" 
+                                        options={caseTypeOptions} 
+                                        onchange={handleOnChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="form-group slds-m-top_medium">
+                    <lightning-combobox name="priority" 
+                                        label="Priority" 
+                                        value={caseModel.priority} 
+                                        placeholder="Select"
+                                        options={priorityOptions} 
+                                        onchange={handleOnChange}>
+                    </lightning-combobox>
+                </div>
+
+                <div class="form-group slds-m-top_medium">
+                    <lightning-input type="file" 
+                                     label="Attachment" 
+                                     accept={acceptedFormats}
+                                     onchange={handleFileUploadChange} 
+                                     multiple>
+                    </lightning-input>
+                </div>
+                <template if:true={hasFiles}>
+                    <div class="form-group slds-m-top_medium">
+                        <p>Your files are:</p><br>
+                        <div class="slds-text-align_right">
+                            <lightning-button-icon icon-name="utility:delete" 
+                                                   size="large" 
+                                                   variant="bare"
+                                                   alternative-text="Delete" 
+                                                   class="slds-m-right_medium" 
+                                                   title="Delete"
+                                                   onclick={handleFileDelete}>
+                            </lightning-button-icon>
+                        </div>
+                        <template for:each={caseModel.files} for:item="file">
+                            <div key={file.title} class="slds-box  slds-var-m-top_xx-small slds-einstein-header slds-box_xx-small">
+                                <p class="slds-var-p-horizontal_small">
+                                    <span style="font-weight: 500; font-size: 16px; ">{file.title} &nbsp; ({file.size} &nbsp;KB)</span>
+                                </p>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+            <br />
+            <div class="slds-grid slds-wrap slds-m-top_x-large">
+                <div class="slds-size_6-of-6">
+                    <button title="submit" class="submit-button" onclick={handleSave}>
+                        <span class="submitButton" style="font-size: 21px;">Submit Case</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <footer class="slds-card__footer ">
+            <p>@Powered by <a href="https://crosscloudpartners.com"><span style="font-weight: 500;">Cross Cloud Partners</span></a></p>
+        </footer>
+    </lightning-card>
+
+</template>
