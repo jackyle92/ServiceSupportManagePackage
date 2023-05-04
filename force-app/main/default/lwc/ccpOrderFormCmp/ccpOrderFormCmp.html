@@ -1,0 +1,62 @@
+<template>
+  <div class="formContainer" id="formContainer">
+    <lightning-spinner if:true={showSpinner} class="loadingSpinner" variant="brand">
+    </lightning-spinner>
+
+    <!-- input form data -->
+    <template if:true={requestOrder}>
+      <lightning-card>
+
+
+        <!-- header -->
+        <div class="slds-var-p-around_medium slds-text-align_center slds-box member-question-box slds-card">
+          <Strong style="font-size: x-large;">ORDER SUPPORT HOURS</Strong>
+        </div>
+        <!-- Customer information -->
+        <div class="slds-var-p-around_medium slds-box member-question-box slds-card ">
+          <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" padding="around-small">
+              <lightning-input type="text" label="Full Name" required></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" padding="around-small">
+              <lightning-input type="text" label="Email" required></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" padding="around-small">
+              <lightning-input type="text" label="Phone" required></lightning-input>
+            </lightning-layout-item>
+          </lightning-layout>
+        </div>
+
+        <!-- Contract order -->
+        <div class="slds-var-p-around_medium slds-box member-question-box slds-card ">
+          <lightning-layout multiple-rows>
+            <lightning-layout-item size="6" padding="around-small">
+              <lightning-input type="number" label="Total Hours" placeholder="" required
+                onchange={handleFirstNameChange}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" padding="around-small">
+              <lightning-combobox name="term" label="Contract Term" value={value} placeholder=""
+                options={contractTermOptions} onchange={handleTermChange} required>
+              </lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" padding="around-small">
+              <lightning-input type="number" label="Total Amount" placeholder="" required disabled
+                onchange={handleFirstNameChange}></lightning-input>
+            </lightning-layout-item>
+          </lightning-layout>
+          <!-- Account Information -->
+          <!-- Enter order data include 
+          (Total hours(picklist), Contract Term(3, 6, 9, 12) months, 
+          Total Amount (fomular)) -->
+        </div>
+      </lightning-card>
+    </template>
+
+    <!-- Add the payment page -->
+    <div if:false={requestOrder}>
+      <div if:true={showPaymentPage}>
+        <!-- show the payment page -->
+      </div>
+    </div>
+  </div>
+</template>

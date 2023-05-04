@@ -6,6 +6,7 @@
 import { LightningElement} from 'lwc';
 import LightningAlert from 'lightning/alert';
 import getContract from '@salesforce/apex/ContractController.getContract';
+import {ShowToastEvent}  from 'lightning/platformShowToastEvent';
 import * as ccpUtils from 'c/ccpUtils';
 
 export default class CcpContractInforBannerCmp extends LightningElement {
@@ -16,28 +17,35 @@ export default class CcpContractInforBannerCmp extends LightningElement {
   remainingDate;
 
 
-  renderedCallback() {
+  constructor() {
+    super();
     getContract().then(result => {
       console.log('Contract banner cmp result: ', result);
+      this.remainingSupportHours = result.remainingSupportHours;
       this.remainingDate = ccpUtils.datediff(Date.now(), Date.parse(result.contractEndDate));
-      if(this.remainingDate < 10) {
+      if(this.remainingDate < 10 || result.remainingSupportHours <= 1) {
         this.closeExpired = true;
         this.endDate = result.contractEndDate;
+        // Give the alert if remaining date < 0
         if(this.remainingDate <= 0) {
+          this.remainingDate = 0;
           this.expired = true;
           LightningAlert.open({
-            message: 'Sorry! your contract was expired. Please renew your contract by button [Renew Contact].',
+            message: "No Active Support Contract. The Managed Support contract has expired due to insufficient hours or contract expired. Please contact support@crosscloudpartners.com to purchase and renew your managed services support",
             theme: 'error', // a red theme intended for error states
-            label: 'Contract has been expired!', // this is the header text
+            label: 'Attention Managed Services Customers!', // this is the header text
           });
-          //Alert has been closed
         }
       }
     });
   }
 
   handleRenewContract() {
-    console.log('handle Renew Contract');
+    const event = new ShowToastEvent({
+      title: 'Feature unavailable', 
+      message: 'This feature is not available at the moment',
+    });
+    this.dispatchEvent(event);
   }
 
 }
