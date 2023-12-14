@@ -25,37 +25,39 @@ public with sharing class ApiManager {
         return (ApiData.getCaseDetailsResult)action.execute(ApiData.getCaseDetailsResult.class, credential.serviceURL, 'POST', getDefaultHeader(), jsonBody);
     }
 
-    //jacky lee - 30 April
+    // Jacky - 30 April 2023 - Call getActiveContract method in ApiManager.getActiveContract
+    // Hilbert - 21 Oct 2023 - Exception Handling
     @AuraEnabled
     public static ApiData.getContractDetailResult getActiveContract(){
         try {
             ApiData.clientCredential credential = getCredential();
-            Map<string, object> mapBody = new Map<string, object>();
-            mapBody.put('apiName', 'getActiveContract');
-            mapBody.put('clientId', credential.clientId);
-            mapBody.put('clientSecretKey', credential.clientSecretKey);
-
+            Map<string, object> mapBody = buildBody(credential, 'getActiveContract', '');
             string jsonBody = JSON.serialize(mapBody);
+
             System.debug('== jsonBody =='  + jsonBody);
 
             actionBase action = new actionBase();
             return (ApiData.getContractDetailResult)action.execute(ApiData.getContractDetailResult.class, credential.serviceURL, 'POST', getDefaultHeader(), jsonBody);
-
-        } catch (Exception e) {
+        } catch (AuraHandledException e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
 
-    public static string getBurndownChart() {
-        ApiData.clientCredential credential = getCredential();
-        Map<string, object> mapBody = buildBody(credential, 'getBurnoutChart', '');
-        string jsonBody = Json.serialize(mapBody);
-         
-        actionBase action = new actionBase();
-
-        ApiData.burndownChartResult ret = (ApiData.burndownChartResult)action.execute(ApiData.burndownChartResult.class, credential.serviceURL, 'POST', getDefaultHeader(), jsonBody);
-        system.debug('ret '+ret);
-        return JSON.serialize(ret.data);
+    // Hilbert - 21 Oct 2023 - Exception Handling
+    public static string getBurndownChart(string chartType) {
+        try {
+            ApiData.clientCredential credential = getCredential();
+            Map<string, object> mapBody = buildBody(credential, 'getBurnoutChart', chartType);
+            string jsonBody = Json.serialize(mapBody);
+             
+            actionBase action = new actionBase();
+    
+            ApiData.burndownChartResult ret = (ApiData.burndownChartResult)action.execute(ApiData.burndownChartResult.class, credential.serviceURL, 'POST', getDefaultHeader(), jsonBody);
+            system.debug('ret '+ret);
+            return JSON.serialize(ret.data);
+        } catch (AuraHandledException e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 
     @AuraEnabled

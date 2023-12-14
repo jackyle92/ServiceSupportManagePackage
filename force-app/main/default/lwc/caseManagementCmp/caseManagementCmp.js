@@ -24,7 +24,7 @@ const COLUMNS = [
     { label: 'Estimation Status', fieldName: 'estimationStatus', sortable: true, type: 'text', sortable: true, cellAttributes: { alignment: 'left'} },
     { label: 'Status', fieldName: 'status', type: 'text', sortable: true, hideDefaultActions: true, wrapText: true },
     { type: 'action', typeAttributes: { rowActions: ACTIONS, menuAlignment: 'right' } },
-    { type: 'customCaseCompleteBtn', hideDefaultActions: true, wrapText: true, typeAttributes:
+    { label: 'action', type: 'customCaseCompleteBtn', hideDefaultActions: true, wrapText: true, typeAttributes:
         { 
             caseStatus: {
                 fieldName: 'status'
@@ -218,6 +218,7 @@ export default class CaseManagementCmp extends LightningElement {
     
     sortData(fieldname, direction) {
         let parseData = JSON.parse(JSON.stringify(this.caseItems));
+        console.log('parseData'+parseData);
         let keyValue = (a) => {
             return a[fieldname];
         };

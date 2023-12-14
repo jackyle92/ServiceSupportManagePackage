@@ -35,6 +35,8 @@ global with sharing virtual class ApiData {
         @AuraEnabled public Date contractStartDate {get; set;}
         @AuraEnabled public Decimal contractTerm {get; set;}
         @AuraEnabled public String status {get; set;}
+        @AuraEnabled public String contractType {get; set;}
+
     }
 
     public class clientCommunication {

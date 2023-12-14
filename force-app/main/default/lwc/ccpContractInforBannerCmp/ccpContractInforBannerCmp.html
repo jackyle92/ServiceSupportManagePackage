@@ -1,24 +1,38 @@
 <template>
-  <template if:true={closeExpired}>
-    <lightning-card class="fill-red-color">
+  <template if:true={hasActiveContract}>
+    <lightning-card name="information_card" style="background-color: aqua;">
       <h3 slot="title">
-        <lightning-icon icon-name="utility:announcement" size="small"></lightning-icon>
+        <lightning-icon icon-name="standard:announcement" size="small" style="margin: 0 15px 0 0;"></lightning-icon>
         Contract Information
       </h3>
       <div slot="footer">
-        <div class="inforContainer slds-p-horizontal_small">
-          <p class=""><Strong>End of Contract Date: {endDate} </Strong></p>
-          <p><Strong>Remaining Dates: {remainingDate} dates</Strong></p>
-          <p><Strong>Remaining Support Hours: {remainingSupportHours} hours</Strong></p>
-        </div>
-        <br />
-        <div class="renewContractContainer" id="renewContainer">
-          <lightning-button variant="destructive" onclick={handleRenewContract} label="Renew Contract"
-            class="slds-m-left_x-small">
-          </lightning-button>
+        <div class="inforContainer slds-p-horizontal_small slds-p-bottom_x-small slds-wrap">
+          <div class="slds-border_bottom slds-p-bottom_xx-small slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-2">
+              <Strong>Contract Start Date:</Strong>
+            </div>
+            <div class="slds-col slds-size_1-of-2">{startDate}</div>
+          </div>
+          <div class="slds-border_bottom slds-p-vertical_xx-small slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-2">
+              <Strong>Contract End Date:</Strong>
+            </div>
+            <div class="slds-col slds-size_1-of-2">{endDate}</div>
+          </div>
+          <div class="slds-border_bottom slds-p-vertical_xx-small slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-2">
+              <Strong>Remaining Days:</Strong>
+            </div>
+            <div class="slds-col slds-size_1-of-2">{rDate} days</div>
+          </div>
+          <div class="slds-p-top_xx-small slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-2">
+              <Strong>Remaining Support Hours:</Strong>
+            </div>
+            <div class="slds-col slds-size_1-of-2">{rSupportHours} hours</div>
+          </div>
         </div>
       </div>
     </lightning-card>
   </template>
-
 </template>

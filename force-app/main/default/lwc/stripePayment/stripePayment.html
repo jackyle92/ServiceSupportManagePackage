@@ -1,0 +1,38 @@
+<template>
+  <lightning-card>
+    <lightning-layout multiple-rows="false" class="slds-wrap">
+      <lightning-input type="text" name="Name" label="Name" data-id="checkValidity" required value={record.Name}
+        onchange={handleChange}>
+      </lightning-input>
+      <lightning-input type="email" name="email" label="Email" data-id="checkValidity" required value={record.email}
+        onchange={handleChange}>
+      </lightning-input>
+      <lightning-input type="number" name="cardNumber" label="Card Number" data-id="checkValidity" required
+        max-length="16" min-length="16" value={record.cardNumber} onchange={handleChange}>
+      </lightning-input>
+      <lightning-input type="number" name="Cvv" label="CVV" max-length="3" min-length="3" data-id="checkValidity"
+        value={record.Cvv} onchange={handleChange}>
+      </lightning-input>
+      <lightning-input type="number" name="cardExpiryMonth" label="Card Expiry Month" data-id="checkValidity" required
+        min="1" max="12" value={record.cardExpiryMonth} onchange={handleChange}>
+      </lightning-input>
+      <lightning-input type="number" name="cardExpiryYear" label="card Expiry Year" data-id="checkValidity" required
+        max-length="4" value={record.cardExpiryYear} onchange={handleChange}>
+      </lightning-input>
+      <lightning-input type="number" name="Amount" label="Service Fee" formatter="currency" data-id="checkValidity"
+        required value={record.Amount} onchange={handleChange}>
+      </lightning-input>
+      <lightning-input type="text" name="CurrencyCode" label="CurrencyCode" data-id="checkValidity"
+        value={record.CurrencyCode} onchange={handleChange}>
+        <!-- </lightning-input> -->
+        <!-- <lightning-input type="text" name="StripeId" label="Stripe Id" data-id="checkValidity" value={record.StripeId}
+        disabled> -->
+      </lightning-input>
+      <lightning-button name="Charge" label="Charge" class="slds-align--absolute-center" onclick={handleCharge}
+        disabled={record.StripeId}>
+      </lightning-button>
+    </lightning-layout>
+    <!-- <c-popup onhandlecancel={closePopUp} if:true={showPopUp} emplyee-number={employeeNumber}>
+    </c-popup> -->
+  </lightning-card>
+</template>

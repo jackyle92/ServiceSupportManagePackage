@@ -1,15 +1,30 @@
 <template>
     <div class="slds-box" style="background-color: white;">
-       <div class="slds-var-m-bottom_large">
-        <lightning-icon icon-name="standard:dashboard_ea" size="small" alternative-text="Connected"></lightning-icon>
-            <span style="font-size: 18px; font-weight: 600; margin-left:10px;">Dashboard</span></div>
-        
-            <div class="slds-theme_default" >
-                <canvas class="line" style="height:40vh; width:80vw" lwc:dom="manual"></canvas>
-            </div>
+        <div class="slds-var-m-bottom_large slds-clearfix">
+            <lightning-icon icon-name="standard:dashboard_ea" size="small"
+                alternative-text="Connected"></lightning-icon>
+            <span style="font-size: 18px; font-weight: 600; margin-left:10px;">Dashboard</span>
+            <button
+                class="slds-button slds-button_neutral slds-float_right slds-m-top_x-small slds-m-right_x-small"
+                onclick={handleChartRefresh}>Refresh</button>
+        </div>
 
-            <div class="slds-var-m-top_large">
+        <div class="slds-var-m-top_large">
+            <span class="slds-m-horizontal_x-small">View Chart By</span>
+            <button class="slds-button slds-button_neutral chart-time-btn"
+                onclick={handleChangeChartTime} data-value="chartWeek">Week</button>
+            <button class="slds-button slds-button_neutral chart-time-btn"
+                onclick={handleChangeChartTime} data-value="chartFortnight">Fortnight</button>
+            <button class="slds-button slds-button_neutral chart-time-btn"
+                onclick={handleChangeChartTime} data-value="chartMonth">Month</button>
+        </div>
+        <div class="slds-theme_default">
+            <canvas class="line" style="height:40vh; width:80vw"
+                lwc:dom="manual"></canvas>
+        </div>
+
+        <!-- <div class="slds-var-m-top_large">
                 <lightning-button label="Refresh" onclick={handleChartRefresh} variant="brand"></lightning-button>
-            </div>
+            </div> -->
     </div>
 </template>

@@ -1,3 +1,17 @@
 .filled-red-text-color {
   color: #f03e3e;
 }
+
+.renewContractContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+button {
+  padding: 10px;
+  padding: 5px 50px;
+  font-size: medium;
+  font-weight: bold;
+  letter-spacing: 1px;
+}

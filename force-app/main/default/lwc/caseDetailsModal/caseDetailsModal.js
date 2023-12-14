@@ -94,6 +94,8 @@ export default class CaseDetailModal extends LightningElement {
 
     handleSave() {
         let requestStr = JSON.stringify(this.caseModel);
+        console.log('requestStr',requestStr)
+        console.log('caseModel',this.caseModel)
 
         this.showSpinner = true;
         updateCase({requestStr: requestStr})
@@ -178,6 +180,8 @@ export default class CaseDetailModal extends LightningElement {
 
     handleOnChange(event) {
         let value = ccpUtils.getValueFromEvent(event);
+        console.log('priority: ', value);
+        console.log(event.target.name);
         this.caseModel[event.target.name] = value;
     }
 

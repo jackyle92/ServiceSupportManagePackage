@@ -3,49 +3,60 @@
  * @Author - Jacky Lee
  * @Date - 30 April 2023
  */
-import { LightningElement} from 'lwc';
-import LightningAlert from 'lightning/alert';
-import getContract from '@salesforce/apex/ContractController.getContract';
-import {ShowToastEvent}  from 'lightning/platformShowToastEvent';
-import * as ccpUtils from 'c/ccpUtils';
+import { LightningElement, api, track } from 'lwc'
+import LightningAlert from 'lightning/alert'
+import getContract from '@salesforce/apex/ContractController.getContract'
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
+import * as ccpUtils from 'c/ccpUtils'
+import { isNull } from 'c/lodash'
 
 export default class CcpContractInforBannerCmp extends LightningElement {
-  closeExpired;
-  expired;
-  endDate;
-  activeContract;
-  remainingDate;
+  closelyExpired
+  endDate
+  startDate
+  contractTerm
+  @api hasActiveContract = false
+  @track rDate
+  @track rSupportHours
 
-
-  constructor() {
-    super();
+  connectedCallback () {
+    //get activated contract only
     getContract().then(result => {
-      console.log('Contract banner cmp result: ', result);
-      this.remainingSupportHours = result.remainingSupportHours;
-      this.remainingDate = ccpUtils.datediff(Date.now(), Date.parse(result.contractEndDate));
-      if(this.remainingDate < 10 || result.remainingSupportHours <= 1) {
-        this.closeExpired = true;
-        this.endDate = result.contractEndDate;
-        // Give the alert if remaining date < 0
-        if(this.remainingDate <= 0) {
-          this.remainingDate = 0;
-          this.expired = true;
-          LightningAlert.open({
-            message: "No Active Support Contract. The Managed Support contract has expired due to insufficient hours or contract expired. Please contact support@crosscloudpartners.com to purchase and renew your managed services support",
-            theme: 'error', // a red theme intended for error states
-            label: 'Attention Managed Services Customers!', // this is the header text
-          });
+      if (result) {
+        // console.log('result of Contract: ' + JSON.stringify(result));
+        this.hasActiveContract = true
+        this.rSupportHours = result.remainingSupportHours
+        this.rDate = ccpUtils.datediff(
+          Date.now(),
+          Date.parse(result.contractEndDate)
+        )
+        this.endDate = this.changeDateFormat(result.contractEndDate)
+        this.startDate = this.changeDateFormat(result.contractStartDate)
+        console.log('this.startDate: ', typeof this.startDate)
+        this.contractTerm = result.contractTerm
+        if (result.contractType == 'Prepaid Contract') {
+          if (this.rDate <= 5 || this.rSupportHours <= 5) {
+            LightningAlert.open({
+              message:
+                'The Managed Support contract has closely expired or the support hours has nearly run out. Please make better use of the remaining time or contact support@crosscloudpartners.com to purchase and renew your managed services support',
+              theme: 'warning',
+              label: 'Attention Managed Services Customers!'
+            })
+          }
         }
+      } else {
+        // LightningAlert.open({
+        //   message:
+        //     'No Active Support Contract. The Managed Support contract has expired. Please contact support@crosscloudpartners.com to purchase and renew your managed services support',
+        //   theme: 'error',
+        //   label: 'Attention Managed Services Customers!'
+        // })
       }
-    });
+    })
   }
 
-  handleRenewContract() {
-    const event = new ShowToastEvent({
-      title: 'Feature unavailable', 
-      message: 'This feature is not available at the moment',
-    });
-    this.dispatchEvent(event);
+  // Current date value format is "YYYY-MM-DD", change to "DD/MM/YYYY"
+  changeDateFormat (date) {
+    return date.split('-').reverse().join('/')
   }
-
 }

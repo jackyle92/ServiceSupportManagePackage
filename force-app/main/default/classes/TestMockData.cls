@@ -34,7 +34,10 @@ global with sharing class TestMockData implements HttpCalloutMock {
             res = mockDataFactory.getCreateClientCommunicationResponse(req, isErrorMode);
         }
         else if (apiName.equalsIgnoreCase('getBurnoutChart')) {
-            res = mockDataFactory.getchartResponse(req, isErrorMode);
+            res = mockDataFactory.getChartResponse(req, isErrorMode);
+        }
+        else if (apiName.equalsIgnoreCase('getActiveContract')) {
+            res = mockDataFactory.getContractResponse(req, isErrorMode);
         }
         return res;
     }
@@ -81,7 +84,7 @@ global with sharing class TestMockData implements HttpCalloutMock {
             return res;
         }
 
-        public HTTPResponse getchartResponse(HTTPRequest req, boolean isErrorMode) { 
+        public HTTPResponse getChartResponse(HTTPRequest req, boolean isErrorMode) { 
             HttpResponse res = new HttpResponse();
             res.setHeader('Content-Type', 'application/json');
 
@@ -100,7 +103,6 @@ global with sharing class TestMockData implements HttpCalloutMock {
             res.setStatusCode(isErrorMode ? 400 : 200);
             return res;
         }
-        
         
         public HTTPResponse getCaseDetailsResponse(HTTPRequest req, boolean isErrorMode) {
             HttpResponse res = new HttpResponse();
@@ -248,6 +250,30 @@ global with sharing class TestMockData implements HttpCalloutMock {
             result.data = clientCommunication;
 
             res.setBody(Json.serialize(result));
+            res.setStatusCode(isErrorMode ? 400 : 200);
+            return res;
+        }
+        
+        public HTTPResponse getContractResponse(HTTPRequest req, boolean isErrorMode) { 
+            HttpResponse res = new HttpResponse();
+            res.setHeader('Content-Type', 'application/json');
+
+            ApiData.contractModel cModel = new ApiData.contractModel();
+            cModel.id = '0000x000000AAA0AAO';
+            cModel.contractNumber = '00000001';
+            cModel.remainingSupportHours = 1.00;
+            cModel.contractEndDate = Date.newInstance(2024, 1, 1);
+            cModel.contractStartDate = Date.newInstance(2023, 1, 1);
+            cModel.contractTerm = 12;
+            cModel.status = 'Activated';
+            cModel.contractType = 'Prepaid Contract';
+            
+            ApiData.getContractDetailResult result = new ApiData.getContractDetailResult();
+            result.status = '200';
+            result.success = true;
+            result.data = cModel;
+
+            res.setBody(JSON.serialize(result));
             res.setStatusCode(isErrorMode ? 400 : 200);
             return res;
         }

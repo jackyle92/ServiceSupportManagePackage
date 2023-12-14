@@ -16,6 +16,7 @@ global class CaseManagementController {
         ApiData.caseModel caseModel = (ApiData.caseModel)JSON.deserialize(requestStr, ApiData.caseModel.class);
         ApiData.updateCaseRequestModel request = new ApiData.updateCaseRequestModel();
         request.caseModel = caseModel;
+        System.debug('caseModel----------- ' + caseModel);
         ApiData.updateCaseResult result = ApiManager.updateCase(request);
         System.debug('#updateCaseResult#' + result);
 
