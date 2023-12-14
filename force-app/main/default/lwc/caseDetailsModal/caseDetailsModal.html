@@ -137,6 +137,9 @@
                                                             </header>
                                                             <div class="slds-comment__content slds-text-longform">
                                                                 <lightning-formatted-text value={communication.question}></lightning-formatted-text>
+                                                                <template if:true={communication.attachmentLink}>
+                                                                    <lightning-formatted-rich-text value={communication.attachmentLink}></lightning-formatted-rich-text>
+                                                                </template>
                                                                 <template if:true={communication.answer}>
                                                                     <lightning-formatted-text value={communication.answer}></lightning-formatted-text>
                                                                 </template>

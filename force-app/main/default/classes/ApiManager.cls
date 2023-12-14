@@ -70,9 +70,6 @@ public with sharing class ApiManager {
         return (ApiData.submitCaseResult)action.execute(ApiData.submitCaseResult.class, credential.serviceURL, 'POST', getDefaultHeader(), jsonBody);
     }
 
-
-
-
     @AuraEnabled
     public static ApiData.updateCaseResult updateCase(ApiData.updateCaseRequestModel request){
         ApiData.clientCredential credential = getCredential();

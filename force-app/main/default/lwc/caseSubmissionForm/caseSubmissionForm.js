@@ -81,8 +81,8 @@ export default class CaseSubmissionForm extends NavigationMixin(LightningElement
                  */
                 if(this.rDate > 5) {
                     let renewBtn = this.template.querySelector('.renew-button');
-                    renewBtn.disabled = true;
-                    renewBtn.classList.add('disabledBtn')
+                    // renewBtn.disabled = true;
+                    // renewBtn.classList.add('disabledBtn')
                 }
             } else {
                 this.disableFormSubmit();

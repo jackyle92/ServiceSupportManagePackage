@@ -135,6 +135,7 @@ public with sharing class CaseManagementControllerTest {
         ApiData.clientCommunication clientCommunication = new ApiData.clientCommunication();
         clientCommunication.caseId = 'caseId';
         clientCommunication.question = 'new question';
+        clientCommunication.attachmentLink = 'new attachmentLink';
         clientCommunication.answer = 'new answer';
         clientCommunication.userName = UserInfo.getFirstName() + ' ' + UserInfo.getLastName();
         clientCommunication.files = new List<ApiData.fileModel>();

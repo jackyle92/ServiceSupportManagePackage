@@ -135,6 +135,7 @@ global with sharing class TestMockData implements HttpCalloutMock {
             clientCommunication.id = 'clientCommunicationId';
             clientCommunication.caseId = 'caseId';
             clientCommunication.question = 'new question';
+            clientCommunication.attachmentLink = 'new attachmentLink';
             clientCommunication.answer = 'new anwser';
             clientCommunication.userName = UserInfo.getFirstName() + ' ' + UserInfo.getLastName();
             clientCommunication.createdDate = Datetime.now().addDays(-1);
@@ -233,6 +234,7 @@ global with sharing class TestMockData implements HttpCalloutMock {
             clientCommunication.id = 'clientCommunicationId';
             clientCommunication.caseId = 'caseId';
             clientCommunication.question = 'new question';
+            clientCommunication.attachmentLink = 'new attachmentLink';
             clientCommunication.answer = 'new answer';
             clientCommunication.userName = UserInfo.getFirstName() + ' ' + UserInfo.getLastName();
             clientCommunication.createdDate = Datetime.now().addDays(-1);

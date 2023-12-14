@@ -6,8 +6,6 @@ global with sharing virtual class ApiData {
         @AuraEnabled public string serviceURL {get; set;} 
     }
 
-   
-    
     global virtual class caseModel {
         @AuraEnabled public string id {get; set;}
         @AuraEnabled public string caseNumber {get; set;}
@@ -43,6 +41,7 @@ global with sharing virtual class ApiData {
         @AuraEnabled public string id {get; set;}
         @AuraEnabled public string caseId {get; set;}
         @AuraEnabled public string question {get; set;}
+        @AuraEnabled public string attachmentLink {get; set;}
         @AuraEnabled public string answer {get; set;}
         @AuraEnabled public string userName {get; set;}
         @AuraEnabled public DateTime createdDate {get; set;}
