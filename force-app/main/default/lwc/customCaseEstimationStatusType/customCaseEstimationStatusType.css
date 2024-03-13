@@ -1,0 +1,6 @@
+.pencil-ico {
+  cursor: pointer;
+}
+.pencil-ico:hover {
+  opacity: 0.8;
+}

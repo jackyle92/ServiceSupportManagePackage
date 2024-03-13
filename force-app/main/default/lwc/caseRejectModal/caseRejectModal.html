@@ -1,0 +1,128 @@
+<template>
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1"
+            class="slds-modal slds-fade-in-open slds-modal_small"
+            style="z-index:9999">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button
+                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                    </button>
+                    <h2 class="slds-text-heading_medium slds-hyphenate">Reject
+                        Reason</h2>
+                </header>
+
+                <div class="slds-theme_default">
+                    <div
+                        class="slds-modal__content full-height__modal-content slds-p-around_medium"
+                        style="position:relative;overflow:initial;">
+                        <div class="slds-spinner_container"
+                            if:true={showSpinner}>
+                            <div role="status"
+                                class="slds-spinner slds-spinner_medium">
+                                <span class="slds-assistive-text">Loading</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-grid_vertical" style="gap: 16px;">
+                            <div class="slds-col caseRejectModal_enquiry__textArea">
+                                <lightning-textarea
+                                    name="enquiry"
+                                    label="Enquiry"
+                                    onchange={handleEnquiryOnChange}>
+                                </lightning-textarea>
+                            </div>
+                            <div class="slds-col">
+                                <template if:false={hasFiles}>
+                                    <!-- <lightning-input
+                                        type="file"
+                                        label="Attachment"
+                                        variant="label-hidden"
+                                        accept={acceptedFormats}
+                                        onchange={handleFileUploadChange}
+                                        multiple>
+                                    </lightning-input> -->
+
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <div
+                                                class="slds-file-selector slds-file-selector_images">
+                                                <div
+                                                    class="slds-file-selector__dropzone">
+                                                    <input id="caseRejectModal_enquiry__fileInput"
+                                                     type="file"
+                                                        class="slds-file-selector__input slds-assistive-text"
+                                                        accept=".png, .pdf, .doc" />
+                                                    <label
+                                                        class="slds-file-selector__body"
+                                                        for="caseRejectModal_enquiry__fileInput">
+                                                        <span
+                                                            class="slds-file-selector__button slds-button slds-button_neutral">
+                                                            <svg
+                                                                class="slds-button__icon slds-button__icon_left"
+                                                                aria-hidden="true">
+                                                                <use
+                                                                    xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#upload"></use>
+                                                            </svg>Upload Files</span>
+                                                        <span
+                                                            class="slds-file-selector__text slds-medium-show">or
+                                                            Drop Files</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </template>
+                                <template if:true={hasFiles}>
+                                    <div
+                                        class="slds-grid slds-grid_align-spread slds-wrap">
+                                        <template
+                                            for:each={clientCommunication.files}
+                                            for:item="file">
+                                            <div
+                                                key={file.title}
+                                                class="slds-col slds-text-align_left slds-p-left_small">
+                                                <span
+                                                    style="font-weight: 500; font-size: 16px; ">{file.title}
+                                                    &nbsp;
+                                                    ({file.size}
+                                                    &nbsp;KB)</span>
+                                            </div>
+                                        </template>
+                                        <div
+                                            class="slds-col slds-text-align_right">
+                                            <lightning-button-icon
+                                                icon-name="utility:delete"
+                                                size="large"
+                                                variant="bare"
+                                                alternative-text="Delete"
+                                                class="slds-m-right_medium"
+                                                title="Delete"
+                                                onclick={handleFileDelete}>
+                                            </lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Close" title="Close"
+                        onclick={closeModal} class="slds-m-right_small"></lightning-button>
+                    <lightning-button label="Send Feedback" title="Send Feedback"
+                        onclick={handleSendEnquiry} variant="brand"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="z-index:9998"></div>
+    </template>
+</template>

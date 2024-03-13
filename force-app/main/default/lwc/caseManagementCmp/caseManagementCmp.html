@@ -1,3 +1,5 @@
+<!-- v1.0.0 - CCP Support (support@crosscloudpartners.com - Cross Cloud Partners) - 6 Feb 2021
+Desc: Create new -->
 <template>
     <template if:true={showSpinner}>
         <lightning-spinner class="spins" size="medium"></lightning-spinner>
@@ -5,25 +7,33 @@
 
     <lightning-card title="CCP Case Management" icon-name="standard:case">
         <div class="slds-grid slds-m-bottom_small" slot="actions">
-            <c-ccp-multi-picklist class="slds-grow" name="caseStatuses" label="Status"
-                pick-list-values={caseStatusOptions} default-values={filters.statuses}
+            <c-ccp-multi-picklist class="slds-grow" name="caseStatuses"
+                label="Status"
+                pick-list-values={caseStatusOptions}
+                default-values={filters.statuses}
                 onpicklistchange={handleStatusChange}>
             </c-ccp-multi-picklist>
         </div>
 
         <template if:true={isValid}>
             <div style="height:auto;border-top: 1px solid #ccc;">
-                <c-ccp-custom-datatable key-field="id" data={caseItems} columns={columns} hide-checkbox-column
-                    wrap-text-max-lines="3" show-row-number-column onrowaction={handleRowActions}
-                    sorted-direction={sortDirection} sorted-by={sortBy} onsort={handleSortData}
-                    oncasenumberclick={handleOnCaseNumberClick} oncasecompletebtnclick={handleCaseCompleteBtnClick}>
+                <c-ccp-custom-datatable key-field="id" data={caseItems}
+                    columns={columns} hide-checkbox-column
+                    wrap-text-max-lines="3" show-row-number-column
+                    onrowaction={handleRowActions}
+                    sorted-direction={sortDirection} sorted-by={sortBy}
+                    onsort={handleSortData}
+                    oncasenumberclick={handleOnCaseNumberClick}
+                    oncasecompletebtnclick={handleCaseCompleteBtnClick}
+                    oncaseestimationstatusselect={handleCaseEstimationStatusSelect}>
                 </c-ccp-custom-datatable>
             </div>
         </template>
 
         <template if:false={isValid}>
             <div class="slds-align_absolute-center">
-                <lightning-icon class="slds-m-right_small" icon-name="utility:info" size="x-small"
+                <lightning-icon class="slds-m-right_small"
+                    icon-name="utility:info" size="x-small"
                     alternative-text="Warning!" title="Warning"></lightning-icon>
                 <span>Select Status view Cases.</span>
             </div>

@@ -1,0 +1,43 @@
+<!-- v1.0.0 - Hilbert Nguyen (hilbert.nguyen@crosscloudpartners.com - Cross Cloud Partners) - 15 Dec 2023
+Desc: Create new -->
+<template>
+    <template if:false={isEstimationStatusEmpty}>
+        <div class="slds-p-horizontal_small">
+            {caseEstimationStatus}
+            <template if:false={isApproved}>
+                <span class="slds-m-left_small" onclick={estimationStatusEdit}>
+                    <lightning-icon
+                        class="pencil-ico"
+                        icon-name="utility:edit"
+                        title="Edit Estimation Status"
+                        size="xx-small"
+                        alternative-text='pencil'></lightning-icon>
+                </span>
+            </template>
+        </div>
+    </template>
+    <template if:true={isEstimationStatusEmpty}>
+            <span class="slds-m-right_small">
+                <lightning-button-menu alternative-text="Show menu"
+                    onselect={handleEstimationSelect} menu-alignment="auto"
+                    icon-size="small">
+                    <lightning-menu-item value="approved"
+                        label="Approve Estimation"></lightning-menu-item>
+                    <lightning-menu-item value="rejected"
+                        label="Reject Estimation"></lightning-menu-item>
+                </lightning-button-menu>
+            </span>
+            <template if:true={isEdit}>
+                <span>
+                    <lightning-button-icon icon-name="utility:close"
+                        alternative-text="Settings" title="Settings"
+                        size='small'
+                        variant='bare' onclick={estimationStatusCancel}></lightning-button-icon>
+                </span>
+            </template>
+            <span>
+                <button onclick={showModal}>Show Modal</button>
+            </span>
+    </template>
+    <c-case-reject-modal></c-case-reject-modal>
+</template>
